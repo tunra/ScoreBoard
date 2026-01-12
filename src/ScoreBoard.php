@@ -4,16 +4,22 @@ namespace App;
 
 class ScoreBoard
 {
+    /**
+     * @var Game[]
+     */
     private(set) array $games = [];
 
-    public function startGame(Game $game)
+    public function startGame(string $home, string $away): Game
     {
-        $this->games[] = $game;
+        $game = Game::createGame(new Team($home), new Team($away), count($this->games) + 1);
+        $this->games[$game->id] = $game;
+
+        return $game;
     }
 
     public function finishGame(Game $game)
     {
-        
+        unset($this->games[$game->id]);
     }
 
     public function updateScore()

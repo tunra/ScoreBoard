@@ -17,16 +17,20 @@ class MainController
     {
         $scoreBoard = new ScoreBoard();
 
-        $team1 = new Team('Team A');
-        $team2 = new Team('Team B');
-        $game = new Game($team1, $team2);
-        $game2 = new Game(new Team('Test 1'), new Team('Test 2'));
+        $game = $scoreBoard->startGame('Team A', 'Team B');
+        $game2 = $scoreBoard->startGame('Team C', 'Team D');
 
-        $scoreBoard->startGame($game);
+        // Finish Game
+        echo 'Finish Game';
+        dump($scoreBoard->games);
+
         $scoreBoard->finishGame($game2);
 
-        dd($scoreBoard->games);
-        echo 'Hello World!';
+        dump($scoreBoard->games);
+        echo '<hr>';
+
+        echo 'Update Score';
+        $scoreBoard->updateScore();
 
         dd();
     }
