@@ -10,6 +10,14 @@ class Game
     private(set) string $id;
     private(set) int $index;
 
+    // @todo is this set private?
+    public int $total {
+        get {
+            return $this->home->score + $this->away->score;
+        }
+        set {}
+    }
+
     private function __construct(Team $homeTeam, Team $awayTeam, int $numberOfGames)
     {
         $this->home = new Side($homeTeam);
@@ -19,13 +27,15 @@ class Game
         $this->id = $homeTeam->name . ':' . $awayTeam->name;
     }
 
-    public static function createGame(Team $homeTeam, Team $awayTeam, int $numberOfGames): Game
+    public static function createGame(string $homeTeam, string $awayTeam, int $numberOfGames): Game
     {
-        return new self($homeTeam, $awayTeam, $numberOfGames);
+        return new self(new Team($homeTeam), new Team($awayTeam), $numberOfGames);
     }
 
-    public function updateScore()
+    public function setScore(int $homeScore, int $awayScore): void
     {
+        $this->home->score = $homeScore;
+        $this->away->score = $awayScore;
     }
 
     public function __toString(): string
