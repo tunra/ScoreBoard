@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Game;
-use App\ScoreBoard;
-use App\Team;
-use JetBrains\PhpStorm\NoReturn;
+use App\ScoreBoard\ScoreBoard;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**

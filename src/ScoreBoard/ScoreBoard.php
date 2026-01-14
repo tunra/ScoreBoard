@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\ScoreBoard;
 
 class ScoreBoard
 {
@@ -22,7 +22,7 @@ class ScoreBoard
             }
         }
 
-        $game = Game::createGame($home, $away, count($this->games) + 1);
+        $game = Game::createGame($home, $away);
         $this->games[$game->id] = $game;
 
         return $game;
@@ -30,6 +30,10 @@ class ScoreBoard
 
     public function finishGame(Game $game): void
     {
+        if (!isset($this->games[$game->id])) {
+            throw new \InvalidArgumentException('Game not found');
+        }
+
         unset($this->games[$game->id]);
     }
 
@@ -42,6 +46,10 @@ class ScoreBoard
         $game->setScore($homeScore, $awayScore);
     }
 
+    /**
+     * @todo sort by order in Game
+     * @return Game[]
+     */
     public function summary(): array
     {
         $games = $this->games;

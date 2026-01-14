@@ -1,14 +1,16 @@
 <?php
 
-namespace App;
+namespace App\ScoreBoard;
 
+/**
+ * @todo implement counter to oder gamestart with other games
+ */
 class Game
 {
     private(set) Side $home;
     private(set) Side $away;
 
     private(set) string $id;
-    private(set) int $index;
 
     // @todo is this set private?
     public int $total {
@@ -18,18 +20,17 @@ class Game
         set {}
     }
 
-    private function __construct(Team $homeTeam, Team $awayTeam, int $numberOfGames)
+    private function __construct(Team $homeTeam, Team $awayTeam)
     {
         $this->home = new Side($homeTeam);
         $this->away = new Side($awayTeam);
-        $this->index = $numberOfGames;
 
         $this->id = $homeTeam->name . ':' . $awayTeam->name;
     }
 
-    public static function createGame(string $homeTeam, string $awayTeam, int $numberOfGames): Game
+    public static function createGame(string $homeTeam, string $awayTeam): Game
     {
-        return new self(new Team($homeTeam), new Team($awayTeam), $numberOfGames);
+        return new self(new Team($homeTeam), new Team($awayTeam));
     }
 
     public function setScore(int $homeScore, int $awayScore): void
