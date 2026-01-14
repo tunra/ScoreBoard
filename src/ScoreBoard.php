@@ -44,21 +44,13 @@ class ScoreBoard
 
     public function summary(): array
     {
-//        $games = $this->games;
-//
-//        usort($games, function (Game $a, Game $b) {
-//            return $b->total <=> $a->total;
-//        });
-//
-//        return $games;
-        // @todo order with $a->index
         $games = $this->games;
 
         uasort($games, function (Game $a, Game $b) {
             if ($b->total === $a->total) {
-
+                return 1;
             }
-            return $b->total <=> $a->total;
+            return $b->total < $a->total ? -1 : 1;
         });
 
         return $games;

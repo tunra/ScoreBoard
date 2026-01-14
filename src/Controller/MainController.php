@@ -41,13 +41,23 @@ class MainController
         $scoreBoard->updateScore($uruguay, 6, 6);
         $scoreBoard->updateScore($argentina, 3, 1);
 
-        dump($scoreBoard->games);
+        $games = $scoreBoard->games;
+        echo '<ul>';
+        foreach ($games as $game) {
+            echo '<li>' . $game . '</li>';
+        }
+        echo '</ul>';
 
         echo '<hr>';
 
         echo '<h3>Summary:</h3>';
-        dd($scoreBoard->summary());
+        $games = $scoreBoard->summary();
 
+        echo '<ul>';
+        foreach ($games as $game) {
+            echo '<li>' . $game . '</li>';
+        }
+        echo '</ul>';
         echo '<hr>';
 
         dd($scoreBoard->games);
