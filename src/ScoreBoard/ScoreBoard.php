@@ -5,7 +5,7 @@ namespace App\ScoreBoard;
 class ScoreBoard
 {
     /**
-     * @todo refactor games exposure to private array and maybe provide getters
+     * Array can be exposed because it can't be modified from outside
      * @var Game[]
      */
     private(set) array $games = [];
@@ -45,7 +45,8 @@ class ScoreBoard
     }
 
     /**
-     * @todo sort by order in Game
+     * Sorts games by total score, most recently added games come first in the summary.
+     *
      * @return Game[]
      */
     public function summary(): array
