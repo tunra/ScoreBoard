@@ -31,20 +31,20 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
     {
         $scoreBoard = new ScoreBoard();
 
-        $mexico = $scoreBoard->startGame('Mexico', 'Canada');
+        $scoreBoard->startGame('Mexico', 'Canada');
 
         $this->expectException(\InvalidArgumentException::class);
         $scoreBoard->startGame('Mexico', 'Canada');
     }
 
-    public function testStartGameArrayTeamAlreadyExistsWithLowerCase()
+    public function testStartGameArrayTeamAlreadyExistsCaseInsensitive()
     {
         $scoreBoard = new ScoreBoard();
 
-        $mexico = $scoreBoard->startGame('Mexico', 'Canada');
+        $scoreBoard->startGame('Mexico', 'Canada');
 
         $this->expectException(\InvalidArgumentException::class);
-        $scoreBoard->startGame('mexico', 'canada');
+        $scoreBoard->startGame('Australia', 'canada');
     }
 
     public function testFinishGameEmpty()

@@ -12,15 +12,11 @@ class ScoreBoard
 
     public function startGame(string $home, string $away): Game
     {
-        // @todo use array_find() ?
-        // @todo compare array keys with upper case uppercase
         // No Team should be a duplicate.
-        foreach ($this->games as $game) {
-            $teams = [$game->home->team->name, $game->away->team->name];
-            if (in_array($home, $teams)) {
-                throw new \InvalidArgumentException("Team {$home} already exists.");
-            } elseif (in_array($away, $teams)) {
-                throw new \InvalidArgumentException("Team {$away} already exists.");
+        foreach (array_keys($this->games) as $id) {
+            $id = strtoupper($id);
+            if (str_contains($id, strtoupper($home)) || str_contains($id, strtoupper($away))) {
+                throw new \InvalidArgumentException("Either '{$home}' or '{$away}' already exist in '{$id}'.");
             }
         }
 
