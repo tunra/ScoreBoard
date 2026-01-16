@@ -8,13 +8,6 @@ use App\ScoreBoard\ScoreBoard;
 
 class ScoreBoardTest extends \PHPUnit\Framework\TestCase
 {
-    private function getFullScoreBoard(): ScoreBoard
-    {
-
-
-        return $scoreBoard;
-    }
-
     public function testStartGameScoreIsZero()
     {
         $scoreBoard = new ScoreBoard();
@@ -22,6 +15,7 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
         $mexico = $scoreBoard->startGame('Mexico', 'Canada');
 
         $this->assertEquals(0, $mexico->home->score);
+        $this->assertEquals(0, $mexico->away->score);
     }
 
     public function testStartGameArrayKeyExists()
@@ -31,6 +25,26 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
         $mexico = $scoreBoard->startGame('Mexico', 'Canada');
 
         $this->assertArrayHasKey($mexico->id, $scoreBoard->games);
+    }
+
+    public function testStartGameArrayTeamAlreadyExists()
+    {
+        $scoreBoard = new ScoreBoard();
+
+        $mexico = $scoreBoard->startGame('Mexico', 'Canada');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $scoreBoard->startGame('Mexico', 'Canada');
+    }
+
+    public function testStartGameArrayTeamAlreadyExistsWithLowerCase()
+    {
+        $scoreBoard = new ScoreBoard();
+
+        $mexico = $scoreBoard->startGame('Mexico', 'Canada');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $scoreBoard->startGame('mexico', 'canada');
     }
 
     public function testFinishGameEmpty()
@@ -54,6 +68,7 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
 
         $this->assertCount( 1, $scoreBoard->games);
         $this->assertArrayNotHasKey($game1->id, $scoreBoard->games);
+        $this->assertArrayHasKey($game2->id, $scoreBoard->games);
     }
 
     public function testFinishGameDoesNotExist()
@@ -80,7 +95,7 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
         $scoreBoard = new ScoreBoard();
 
         $this->expectException(\InvalidArgumentException::class);
-        $scoreBoard->updateScore(Game::createGame('Mexico', 'Canada'), 1, 0);
+        $scoreBoard->updateScore(Game::createGame('Mexico', 'Canada'));
     }
 
     public function testUpdateScore()
@@ -97,7 +112,7 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(5, $game->away->score);
     }
 
-    public function testSummary()
+    public function testSummaryOrderByTotalAndRecentlyAdded()
     {
         $scoreBoard = new ScoreBoard();
 
@@ -115,9 +130,12 @@ class ScoreBoardTest extends \PHPUnit\Framework\TestCase
 
         $summary = $scoreBoard->summary();
 
-        $games = array_keys($summary);
-//        $this->assertArrayIsEqualToArrayOnlyConsideringListOfKeys([
-//
-//        ]);
+        $this->assertEquals([
+            $uruguay->id,
+            $spain->id,
+            $mexico->id,
+            $argentina->id,
+            $germany->id,
+        ], array_keys($summary));
     }
 }

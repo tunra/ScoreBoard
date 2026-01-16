@@ -5,6 +5,7 @@ namespace App\ScoreBoard;
 class ScoreBoard
 {
     /**
+     * @todo refactor games exposure to private array and maybe provide getters
      * @var Game[]
      */
     private(set) array $games = [];
@@ -12,6 +13,7 @@ class ScoreBoard
     public function startGame(string $home, string $away): Game
     {
         // @todo use array_find() ?
+        // @todo compare array keys with upper case uppercase
         // No Team should be a duplicate.
         foreach ($this->games as $game) {
             $teams = [$game->home->team->name, $game->away->team->name];
