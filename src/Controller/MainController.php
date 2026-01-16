@@ -58,7 +58,5 @@ class MainController
         echo '<hr>';
 
         dd($scoreBoard->games);
-
-        dd();
     }
 }

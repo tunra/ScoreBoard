@@ -5,7 +5,7 @@ namespace App\ScoreBoard;
 class ScoreBoard
 {
     /**
-     * Array can be exposed because it can't be modified from outside
+     * Array can be exposed with a private setter because it can't be modified from outside
      * @var Game[]
      */
     private(set) array $games = [];
@@ -54,10 +54,10 @@ class ScoreBoard
         $games = $this->games;
 
         uasort($games, function (Game $a, Game $b) {
-            if ($b->total === $a->total) {
+            if ($b->getTotal() === $a->getTotal()) {
                 return 1;
             }
-            return $b->total < $a->total ? -1 : 1;
+            return $b->getTotal() < $a->getTotal() ? -1 : 1;
         });
 
         return $games;

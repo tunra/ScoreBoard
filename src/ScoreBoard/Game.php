@@ -2,23 +2,13 @@
 
 namespace App\ScoreBoard;
 
-/**
- * @todo implement counter to oder gamestart with other games
- */
+
 class Game
 {
     private(set) Side $home;
     private(set) Side $away;
 
     private(set) string $id;
-
-    // @todo is this set private?
-    public int $total {
-        get {
-            return $this->home->score + $this->away->score;
-        }
-        set {}
-    }
 
     private function __construct(Team $homeTeam, Team $awayTeam)
     {
@@ -37,6 +27,11 @@ class Game
     {
         $this->home->score = $homeScore;
         $this->away->score = $awayScore;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->home->score + $this->away->score;
     }
 
     public function __toString(): string
